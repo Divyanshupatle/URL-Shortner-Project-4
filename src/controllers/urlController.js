@@ -44,7 +44,7 @@ const creatUrl = async function (req, res) {
         }
 
         if (!validUrl.isUri(longUrl)) {
-            return res.status(400).send({ status: false, message: "invalidUrl" })
+            return res.status(400).send({ status: false, message: "invalid long URL" })
         }
         const urlCode = shortid.generate().toLocaleLowerCase()
 
@@ -79,7 +79,7 @@ const getUrl = async function (req, res) {
         return res.status(302).redirect(findURL.longUrl);
         }
         
-        return res.status(400).send({ status: false, message: "invalidUrl" })
+        return res.status(404).send({ status: false, message: "url not found" })
 
     }
     catch (err) {

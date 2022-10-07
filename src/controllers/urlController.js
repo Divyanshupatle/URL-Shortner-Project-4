@@ -25,12 +25,6 @@ redisClient.on("connect", async function () {
 const SET_ASYNC = promisify(redisClient.SET).bind(redisClient);
 const GET_ASYNC = promisify(redisClient.GET).bind(redisClient);
 
-const isValidAdd = function (value) {
-    if (typeof (value) === undefined || typeof (value) === null) { return false }
-    if (value.trim().length == 0) { return false }
-    if (typeof (value) === "string" && value.trim().length > 0) { return true }
-}
-
 
 const creatUrl = async function (req, res) {
     try {
@@ -40,9 +34,7 @@ const creatUrl = async function (req, res) {
         if (Object.keys(data).length == 0) {
             return res.status(400).send({ status: false, message: "please provide data in body" })
         }
-        if (!isValidAdd(longUrl)) {
-            return res.status(400).send({ status: false, message: "Url is mandatory" })
-        }
+        
 
         if (!validUrl.isUri(longUrl)) {
             return res.status(400).send({ status: false, message: "invalid long URL" })

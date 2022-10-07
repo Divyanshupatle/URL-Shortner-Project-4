@@ -26,10 +26,11 @@ const SET_ASYNC = promisify(redisClient.SET).bind(redisClient);
 const GET_ASYNC = promisify(redisClient.GET).bind(redisClient);
 
 const isValidAdd = function (value) {
-    if (typeof value == "undefined" || value === null || typeof value === "boolean" || typeof value === "number") return false
-    if (typeof value == "string" && value.trim().length == 0) return false
-    return true
+    if (typeof (value) === undefined || typeof (value) === null) { return false }
+    if (value.trim().length == 0) { return false }
+    if (typeof (value) === "string" && value.trim().length > 0) { return true }
 }
+
 
 const creatUrl = async function (req, res) {
     try {
@@ -39,7 +40,7 @@ const creatUrl = async function (req, res) {
         if (Object.keys(data).length == 0) {
             return res.status(400).send({ status: false, message: "please provide data in body" })
         }
-        if (!longUrl) {
+        if (!isValidAdd(longUrl)) {
             return res.status(400).send({ status: false, message: "Url is mandatory" })
         }
 
